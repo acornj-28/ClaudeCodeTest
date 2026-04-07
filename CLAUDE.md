@@ -16,12 +16,18 @@ To launch from the terminal: `start <filename>.html` (Windows) or `open <filenam
 
 ## Git workflow
 
-Commit and push after every meaningful change:
+**Claude must commit and push after every meaningful unit of work** — feature additions, bug fixes, refactors, and any change that should be preservable. Never leave completed work uncommitted. The goal is that the GitHub remote always reflects the current working state so nothing is ever lost.
 
 ```bash
 git add <files>
 git commit -m "descriptive message"
 git push
+```
+
+Commit message format: short imperative summary on the first line (e.g. `Add reload mechanic to player`), followed by a blank line and bullet points if more context is needed. Always append the co-author trailer:
+
+```
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 ```
 
 Remote: https://github.com/acornj-28/ClaudeCodeTest
