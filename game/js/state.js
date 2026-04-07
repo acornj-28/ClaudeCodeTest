@@ -63,6 +63,13 @@ const stateManager = {
       case States.PLAYING:
         if (!gc) break;
 
+        // Pause
+        if (input.keys['Escape']) {
+          input.keys['Escape'] = false; // consume so it doesn't re-trigger
+          this.transition(States.PAUSED);
+          break;
+        }
+
         // Update entities
         gc.player.update(dt, gc.particles);
         gc.player.tryShoot(gc.bullets, gc.particles);
@@ -114,6 +121,13 @@ const stateManager = {
         });
         break;
 
+      case States.PAUSED:
+        if (input.keys['Escape']) {
+          input.keys['Escape'] = false;
+          this.transition(States.PLAYING);
+        }
+        break;
+
       case States.WAVE_TRANSITION:
         if (!gc) break;
         gc.waveTransitionTimer -= dt;
@@ -154,6 +168,10 @@ const stateManager = {
     switch (state) {
       case States.MENU:
         menuScreen.draw(ctx);
+        break;
+
+      case States.PAUSED:
+        pausedScreen.draw(ctx);
         break;
 
       case States.WAVE_TRANSITION:

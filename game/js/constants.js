@@ -106,6 +106,7 @@ function getLevel(n) {
 const States = {
   MENU: 'menu',
   PLAYING: 'playing',
+  PAUSED: 'paused',
   WAVE_TRANSITION: 'wave_transition',
   LEVEL_COMPLETE: 'level_complete',
   GAME_OVER: 'game_over',

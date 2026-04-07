@@ -95,7 +95,7 @@ function getLevel(n) {
 }
 
 const States = {
-  MENU: 'menu', PLAYING: 'playing', WAVE_TRANSITION: 'wave_transition',
+  MENU: 'menu', PLAYING: 'playing', PAUSED: 'paused', WAVE_TRANSITION: 'wave_transition',
   LEVEL_COMPLETE: 'level_complete', GAME_OVER: 'game_over',
 };
 
@@ -618,7 +618,8 @@ const renderer = {
   draw(ctx, gc, state) {
     ctx.imageSmoothingEnabled = false;
     drawBackground(ctx);
-    if (state === States.PLAYING || state === States.WAVE_TRANSITION) {
+    const showGame = state === States.PLAYING || state === States.WAVE_TRANSITION || state === States.PAUSED;
+    if (showGame) {
       gc.particles.draw(ctx);
       for (let b of gc.bullets) b.draw(ctx);
       for (let e of gc.enemies) drawEnemy(ctx, e);
@@ -659,6 +660,18 @@ const menuScreen = {
     ctx.fillStyle = COLORS.rusher;
     ctx.save(); ctx.translate(cx-10, previewY+7); ctx.rotate(Math.PI/4); ctx.fillRect(-6,-6,12,12); ctx.restore();
     ctx.fillStyle = COLORS.tank; ctx.fillRect(cx+72, previewY, 20, 22);
+    ctx.textAlign = 'left';
+  }
+};
+
+// ─── paused.js ────────────────────────────────────────────────────────────────
+const pausedScreen = {
+  draw(ctx) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.55)'; ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 48px monospace'; ctx.fillStyle = '#000'; ctx.fillText('PAUSED', CANVAS_W/2+2, CANVAS_H/2-18);
+    ctx.fillStyle = '#ecf0f1'; ctx.fillText('PAUSED', CANVAS_W/2, CANVAS_H/2-20);
+    ctx.font = '14px monospace'; ctx.fillStyle = '#888'; ctx.fillText('[ ESC ] Resume', CANVAS_W/2, CANVAS_H/2+24);
     ctx.textAlign = 'left';
   }
 };
@@ -741,6 +754,7 @@ const stateManager = {
         menuScreen.update(dt, () => this.startNewGame()); break;
       case States.PLAYING:
         if (!gc) break;
+        if (input.keys['Escape']) { input.keys['Escape'] = false; this.transition(States.PAUSED); break; }
         gc.player.update(dt, gc.particles);
         gc.player.tryShoot(gc.bullets, gc.particles);
         for (let e of gc.enemies) e.update(dt, gc.player, gc.particles);
@@ -763,6 +777,9 @@ const stateManager = {
           }
         });
         break;
+      case States.PAUSED:
+        if (input.keys['Escape']) { input.keys['Escape'] = false; this.transition(States.PLAYING); }
+        break;
       case States.WAVE_TRANSITION:
         if (!gc) break;
         gc.waveTransitionTimer -= dt;
@@ -779,6 +796,7 @@ const stateManager = {
     renderer.draw(ctx, gc || { player: new Player(), enemies: [], bullets: [], particles: new ParticleSystem(), score: 0, level: 1, wave: 1 }, state);
     switch (state) {
       case States.MENU:            menuScreen.draw(ctx); break;
+      case States.PAUSED:          pausedScreen.draw(ctx); break;
       case States.WAVE_TRANSITION: if (gc) this._drawWaveTransition(ctx, gc); break;
       case States.LEVEL_COMPLETE:  levelCompleteScreen.draw(ctx, gc); break;
       case States.GAME_OVER:       gameOverScreen.draw(ctx, gc); break;

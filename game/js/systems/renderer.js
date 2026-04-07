@@ -5,7 +5,8 @@ const renderer = {
     // 1. Background
     drawBackground(ctx);
 
-    if (state === States.PLAYING || state === States.WAVE_TRANSITION) {
+    const showGame = state === States.PLAYING || state === States.WAVE_TRANSITION || state === States.PAUSED;
+    if (showGame) {
       // 2. Particles (behind entities)
       gc.particles.draw(ctx);
 
@@ -22,7 +23,7 @@ const renderer = {
       hud.draw(ctx, gc);
     }
 
-    // 7. Crosshair (always on top when playing)
+    // 7. Crosshair (only when actively playing)
     if (state === States.PLAYING || state === States.WAVE_TRANSITION) {
       drawCrosshair(ctx, input.mouse.x, input.mouse.y);
     }
