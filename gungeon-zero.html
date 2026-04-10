@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gungeon Zero</title>
+  <title>Acorn Shooter Jones</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -646,8 +646,8 @@ const menuScreen = {
     const cx = CANVAS_W / 2;
     const hue = 160 + Math.sin(this.time * 1.5) * 20;
     ctx.font = 'bold 56px monospace'; ctx.textAlign = 'center';
-    ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillText('GUNGEON ZERO', cx+3, 183);
-    ctx.fillStyle = `hsl(${hue},80%,55%)`; ctx.fillText('GUNGEON ZERO', cx, 180);
+    ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillText('ACORN SHOOTER JONES', cx+3, 183);
+    ctx.fillStyle = `hsl(${hue},80%,55%)`; ctx.fillText('ACORN SHOOTER JONES', cx, 180);
     ctx.font = '16px monospace'; ctx.fillStyle = '#888'; ctx.fillText('SURVIVE THE WAVES', cx, 220);
     if (this.blinkOn) { ctx.font = '14px monospace'; ctx.fillStyle = '#ecf0f1'; ctx.fillText('[ ENTER ] OR CLICK TO START', cx, 290); }
     ctx.font = '11px monospace'; ctx.fillStyle = '#666';

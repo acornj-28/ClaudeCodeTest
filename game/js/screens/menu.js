@@ -35,11 +35,11 @@ const menuScreen = {
 
     // Shadow
     ctx.fillStyle = 'rgba(0,0,0,0.6)';
-    ctx.fillText('GUNGEON ZERO', cx + 3, 183);
+    ctx.fillText('ACORN SHOOTER JONES', cx + 3, 183);
 
     // Main title
     ctx.fillStyle = `hsl(${hue}, 80%, 55%)`;
-    ctx.fillText('GUNGEON ZERO', cx, 180);
+    ctx.fillText('ACORN SHOOTER JONES', cx, 180);
 
     // Subtitle
     ctx.font = '16px monospace';
