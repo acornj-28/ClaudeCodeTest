@@ -9,6 +9,7 @@ function makeGameContext() {
     wave: 1,
     waveTransitionTimer: 0,
     waveClearedFlag: false,
+    map: generateMap(1),
   };
 }
 
@@ -107,6 +108,7 @@ const stateManager = {
                 gc.enemies = [];
                 gc.bullets = [];
                 gc.waveClearedFlag = false;
+                gc.map = generateMap(gc.level);
                 this.transition(States.LEVEL_COMPLETE);
               }, 100);
             } else {

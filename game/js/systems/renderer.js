@@ -3,7 +3,7 @@ const renderer = {
     ctx.imageSmoothingEnabled = false;
 
     // 1. Background
-    drawBackground(ctx);
+    drawBackground(ctx, gc.map || null);
 
     const showGame = state === States.PLAYING || state === States.WAVE_TRANSITION || state === States.PAUSED;
     if (showGame) {
